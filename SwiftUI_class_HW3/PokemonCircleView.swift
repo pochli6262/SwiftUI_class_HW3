@@ -1,8 +1,9 @@
-// 圓形圖片的View
+import SwiftUI
+
 struct PokemonCircleView: View {
-    
-    @Environment(\.colorScheme) var colorScheme  // 偵測系統模式
     let pokemon: Pokemon
+    let isSelected: Bool
+    @Environment(\.colorScheme) var colorScheme  // 偵測系統模式
 
     var body: some View {
         VStack {
@@ -15,25 +16,27 @@ struct PokemonCircleView: View {
                             endPoint: .top
                         )
                     )
-                    .frame(width: 110, height: 110)
+                    .frame(width: isSelected ? 110 : 80, height: isSelected ? 110 : 80)
 
                 Circle()
-//                    .fill(colorScheme == .dark ? .gray : .white)
-                    .fill(colorScheme == .dark ? Color.gray.opacity(0.5) : Color.white.opacity(0.8))
-                    .frame(width: 100, height: 100)
+//                    .foregroundStyle(.white)
+                    .fill(colorScheme == .dark ? Color.gray.opacity(0.7) : Color.white.opacity(0.4))
+                    .frame(width: isSelected ? 100 : 70, height: isSelected ? 100 : 70)
 
                 Image(pokemon.imageName)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 100, height: 100)
+                    .frame(width: isSelected ? 100 : 70, height: isSelected ? 100 : 70)
                     .clipShape(Circle())
             }
             Text(pokemon.name)
                 .foregroundColor(.blue)
                 .font(.headline)
         }
+        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
+
 
 struct PokemonDetailView: View {
     let pokemon: Pokemon
@@ -59,18 +62,32 @@ struct PokemonDetailView: View {
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(colorScheme == .dark ? .cyan : .blue) // 深色模式用 cyan
-//                        .underline()
                 }
                 .padding(.bottom, 10)
 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("屬性: \(pokemon.property)")
-                    Text("弱點: \(pokemon.weak)")
+                    HStack{
+                        Text("屬性: \(pokemon.property)")
+                            .bold()
+                        Image(systemName: "flame")
+                            .bold()
+                    }
+                    HStack{
+                        Text("弱點: \(pokemon.weak)")
+                            .bold()
+                        Image(systemName: "drop.halffull")
+                            .bold()
+                    }
                     Text("身高: \(String(format: "%.1f", pokemon.height)) m")
+                        .bold()
                     Text("體重: \(String(format: "%.1f", pokemon.weight)) kg")
+                        .bold()
                     Text("特性: \(pokemon.ability)")
+                        .bold()
                     Text("分類: \(pokemon.classification)")
+                        .bold()
                     Text("性別: ♂︎/♀︎")
+                        .bold()
                 }
                 .font(.title2)
                 .foregroundColor(colorScheme == .dark ? .white : .black) // 文字顏色適應模式
@@ -78,6 +95,6 @@ struct PokemonDetailView: View {
             }
         }
         .transition(.opacity)
-//        .animation(.easeInOut, value: pokemon)
+        .animation(.easeInOut, value: pokemon)
     }
 }
