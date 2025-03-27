@@ -3,7 +3,7 @@ import SwiftUI
 struct PokemonCircleView: View {
     let pokemon: Pokemon
     let isSelected: Bool
-    @Environment(\.colorScheme) var colorScheme  // 偵測系統模式
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         VStack {
@@ -19,7 +19,6 @@ struct PokemonCircleView: View {
                     .frame(width: isSelected ? 110 : 80, height: isSelected ? 110 : 80)
 
                 Circle()
-//                    .foregroundStyle(.white)
                     .fill(colorScheme == .dark ? Color.gray.opacity(0.7) : Color.white.opacity(0.4))
                     .frame(width: isSelected ? 100 : 70, height: isSelected ? 100 : 70)
 
@@ -40,7 +39,7 @@ struct PokemonCircleView: View {
 
 struct PokemonDetailView: View {
     let pokemon: Pokemon
-    @Environment(\.colorScheme) var colorScheme  // 偵測系統模式
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
@@ -61,7 +60,7 @@ struct PokemonDetailView: View {
                     Text(pokemon.name)
                         .font(.largeTitle)
                         .bold()
-                        .foregroundColor(colorScheme == .dark ? .cyan : .blue) // 深色模式用 cyan
+                        .foregroundColor(colorScheme == .dark ? .cyan : .blue)
                 }
                 .padding(.bottom, 10)
 
@@ -90,7 +89,7 @@ struct PokemonDetailView: View {
                         .bold()
                 }
                 .font(.title2)
-                .foregroundColor(colorScheme == .dark ? .white : .black) // 文字顏色適應模式
+                .foregroundColor(colorScheme == .dark ? .white : .black)
                 .padding()
             }
         }
